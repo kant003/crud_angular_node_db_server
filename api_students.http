@@ -1,0 +1,33 @@
+###
+GET http://localhost:3000/students/
+
+###
+GET http://localhost:3000/students?search=ana
+
+###
+GET http://localhost:3000/students/2
+
+###
+POST http://localhost:3000/students/
+Content-Type: application/json
+
+{
+  "name": "Pepe",
+  "email": "pepe@pepe.es",
+  "age": 30  
+}
+
+
+###
+PUT http://localhost:3000/students/6
+Content-Type: application/json
+
+{
+  "name": "Don Pepe",
+  "email": "pepe@pepe.es",
+  "age": 31
+}
+
+
+###
+DELETE http://localhost:3000/students/5
