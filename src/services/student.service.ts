@@ -1,5 +1,6 @@
 import { pool } from '../config/db';
 import { Student } from '../types/student';
+import { RowDataPacket } from 'mysql2/promise';
 
 export const getStudents = async (search?: string): Promise<Student[]> => {
   let sql = 'SELECT * FROM students';
@@ -12,16 +13,16 @@ export const getStudents = async (search?: string): Promise<Student[]> => {
 
   sql += ' ORDER BY created_at DESC';
 
-  const [rows] = await pool.query<Student[]>(sql, params);
-  return rows;
+  const [rows] = await pool.query<RowDataPacket[]>(sql, params);
+  return rows as Student[];
 };
 
 export const getStudentById = async (id: number): Promise<Student | null> => {
-  const [rows] = await pool.query<Student[]>(
+  const [rows] = await pool.query<RowDataPacket[]>(
     'SELECT * FROM students WHERE id = ?',
     [id]
   );
-  return rows[0] ?? null;
+  return (rows as Student[])[0] ?? null;
 };
 
 export const createStudent = async (
