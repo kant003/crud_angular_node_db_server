@@ -26,7 +26,7 @@ GET http://localhost:3000/auth/google/
 ###
 
 
-POST https://crudbackend-brh2wzge1-kant003s-projects.vercel.app/auth/register/
+POST https://crudbackend-pink.vercel.app/auth/register/
 Content-Type: application/json
 
 {
@@ -37,7 +37,10 @@ Content-Type: application/json
 
 
 ###
-GET https://crudbackend-h4tqqp9su-kant003s-projects.vercel.app/hola
+GET https://crudbackend-pink.vercel.app/env-check
+
+###
+GET https://crudbackend-pink.vercel.app/hola
 
 ###
 GET http://localhost:3000/hola
