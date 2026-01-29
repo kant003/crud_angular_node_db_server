@@ -13,6 +13,11 @@ app.use(express.json());
 
 app.use('/students', studentRoutes);
 app.use('/auth', authRoutes); // Added auth routes
-
+app.get("/hola", (_req, res) => {
+  res.json({
+    ok: true,
+    message: "Hola mundo 👋 Backend funcionando"
+  });
+});
 
 export default app;

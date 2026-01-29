@@ -34,3 +34,11 @@ Content-Type: application/json
   "password": "pepe123",
   "name": "Pepe" 
 }
+
+
+###
+GET https://crudbackend-gpby7mk7c-kant003s-projects.vercel.app/hola
+
+###
+GET http://localhost:3000/hola
+
