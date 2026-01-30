@@ -15,19 +15,19 @@ passport.use(
         const email = profile.emails?.[0].value;
         const name = profile.displayName;
 
-        const [rows]: any = await pool.query(
-          'SELECT * FROM users WHERE google_id = ?',
+        const result = await pool.query(
+          'SELECT * FROM users WHERE google_id = $1',
           [googleId]
         );
 
-        if (rows.length) return done(null, rows[0]);
+        if (result.rows.length) return done(null, result.rows[0]);
 
-        const [result]: any = await pool.query(
-          'INSERT INTO users (email, name, provider, google_id) VALUES (?, ?, "google", ?)',
-          [email, name, googleId]
+        const result2 = await pool.query(
+          'INSERT INTO users (email, name, provider, google_id) VALUES ($1, $2, $3, $4) RETURNING id',
+          [email, name, 'google', googleId]
         );
 
-        done(null, { id: result.insertId, email });
+        done(null, { id: result2.rows[0].id, email });
       } catch (err) {
         done(err);
       }

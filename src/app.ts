@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.use('/students', studentRoutes);
 app.use('/auth', authRoutes); // Added auth routes
+
 app.get("/hola", (_req, res) => {
   res.json({
     ok: true,
@@ -22,15 +23,7 @@ app.get("/hola", (_req, res) => {
 
 app.get('/env-check', (req, res) => {
   res.json({
-    DB_HOST: !!process.env.DB_HOST,
-    DB_USER: !!process.env.DB_USER,
-    DB_NAME: !!process.env.DB_NAME,
-    JWT_SECRET: !!process.env.JWT_SECRET,
-    DB_HOST2:process.env.DB_HOST,
-    DB_USER2: process.env.DB_USER,
-    DB_NAME2: process.env.DB_NAME,
-    JWT_SECRET2: process.env.JWT_SECRET,
-    DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_URL: process.env.DATABASE_URL
   });
 });
 

@@ -1,30 +1,23 @@
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// Cargar variables de entorno
+dotenv.config();
+
 const isProduction = process.env.NODE_ENV === 'production';
 
-let db;
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: isProduction ? { rejectUnauthorized: false } : false,
+});
 
-if (isProduction) {
-  // PostgreSQL (Neon)
-  const { Pool } = await import('pg');
-  db = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-  });
-} else {
-  // MariaDB (local)
-  const mysql = await import('mysql2/promise');
-  db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  });
-}
+// Opcional: comprobar conexión al arrancar
+db.on('connect', () => {
+  console.log('✅ Conectado a PostgreSQL');
+});
 
-export { db };
+db.on('error', (err) => {
+  console.error('❌ Error en PostgreSQL', err);
+});
+
+export { db as pool };
